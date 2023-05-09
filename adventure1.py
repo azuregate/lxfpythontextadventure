@@ -27,7 +27,7 @@ room2 = room(2, "North Chamber", "You see the skeleton of a dwarf holding an axe
 room3 = room(3, "South Chamber", "You see an antique wooden chest. It's locked.",[None,None,None,None], None)
 room4 = room(4, "East Chamber", "You see entrance to the cave where you arrived earlier. The gate is locked. It's stained red with rust.",[None,None,None,None], None)
 room5 = room(5, "West Chamber", "You see an iron grille set into the wall. Someone has prised it open.",[None,None,None,None], None)
-room6 = room(6, "Cave Entrance", "You step out blinking into the sunlight.",[None,None,None,room4], None)
+room6 = room(6, "Cave Entrance", "You step out blinking into the sunlight.",[None,None,None,None], None)
 
 # Here the room exits are defined in a list in NSEW order.
 
@@ -36,6 +36,7 @@ room2.exits = [None, room1, None, None]
 room3.exits = [room1,None,None,None]
 room4.exits = [None,None,None,room1]
 room5.exits = [None,None,room1,None]
+room6.exits = [None,None,None,room4]
 
 # Here we define the keys.
 
