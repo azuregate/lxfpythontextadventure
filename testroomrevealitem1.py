@@ -23,7 +23,7 @@ class Item:
         self.portable = portable
         self.revealsitem = revealsitem
 
-armour = Item("Armour", "A battered set of dwarf plate mail armour. It's not your size but could come in useful.", None, True, None)
+armour = Item("Armour", "A battered set of dwarf plate mail armour.", "You see a dwarf skeleton.", True, None)
 axe = Item("Axe", "The axe is caked with dirt but you can see it's still razor sharp.","You see the skeleton of a dwarf.", True, None)
 skeleton = Item("Skeleton", "The dwarf's skeleton is still wearing a suit of ARMOUR. The bones are yellowed.", None, False, armour)
 
@@ -67,6 +67,8 @@ def lookat(item):
             if room_item.revealsitem is not None:
                 player.currentroom.items.append(room_item.revealsitem)
                 print("You also see", room_item.revealsitem.name + ".")
+                room_item.itemdesc = room_item.revealsitem.updroomdesc
+                room_item.revealsitem = None
             return
 
     for inventory_item in player.inventory:
