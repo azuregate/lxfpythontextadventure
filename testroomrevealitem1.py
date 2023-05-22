@@ -67,8 +67,6 @@ def lookat(item):
             if room_item.revealsitem is not None:
                 player.currentroom.items.append(room_item.revealsitem)
                 print("You also see", room_item.revealsitem.name + ".")
-                room_item.itemdesc = room_item.revealsitem.updroomdesc
-                room_item.revealsitem = None
             return
 
     for inventory_item in player.inventory:
