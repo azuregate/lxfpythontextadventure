@@ -1,10 +1,6 @@
 # Import the necessary library for colored text (e.g., colorama)
 from colorama import Fore, Style
 import time
-import progressbar2 as progressbar
-import pygame
-
-pygame.init()
 
 class Room:
     def __init__(self, number, name, description, exits, key, items, enemies):
@@ -83,38 +79,6 @@ print("Greetings", player_name + "!")
 
 player = Player(player_name, room5, [], 10, [bread], None)
 
-def play_sword_clang():
-    sound_file_path = "/home/nate/mu_code/sword.wav"
-    sword_sound = pygame.mixer.Sound(sound_file_path)
-    sword_sound.play()
-
-def play_mace_clang():
-    sound_file_path = "/home/nate/mu_code/mace.wav"
-    sword_sound = pygame.mixer.Sound(sound_file_path)
-    sword_sound.play()
-    return
-
-def showhpbar():
-  # Calculate the percentage of hit points
-    progress = player.hp / 10.0 * 100
-
-        # Determine the color based on HP value
-    if player.hp >= 7:
-        hp_color = Fore.GREEN
-    elif 4 <= player.hp <= 6:
-        hp_color = Fore.YELLOW
-    else:
-        hp_color = Fore.RED
-
-    # Create the progress bar string manually
-    bar_length = 20
-    filled_length = int(bar_length * progress // 100)
-    bar = '█' * filled_length + '-' * (bar_length - filled_length)
-
-    # Print the progress bar with the appropriate color
-    print(hp_color + f"HP: [{bar}] {player.hp}/10 HP")
-    return
-
 def typewriter_effect(text, delay=0.1):
     for char in text:
         print(char, end='', flush=True)
@@ -141,7 +105,6 @@ def fight(enemy_name):
             # Player's turn
             player_damage = player.weapon.damage
             enemy.hp -= player_damage
-            play_sword_clang()
             typewriter_effect(f"\033[32mYou hit the {enemy.name} with your {player.weapon.name}. It causes {player_damage} damage.\033[0m")
 
 
@@ -155,9 +118,7 @@ def fight(enemy_name):
             # Enemy's turn
             enemy_damage = enemy.weapon.damage
             player.hp -= enemy_damage
-            play_mace_clang()
             typewriter_effect(f"\033[31mThe {enemy.name} hits you with its {enemy.weapon.name}. It causes {enemy_damage} damage.\033[0m")
-            showhpbar()
 
             # Check player's HP
             checkhp()
@@ -241,6 +202,13 @@ def listinventory():
     print("+-------------------------+")
     print(Style.RESET_ALL)
 
+    if player.weapon != None:
+        print(Fore.BLUE + "Current weapon:", player.weapon.name)
+    else:
+        print(Fore.BLUE + "Current weapon: None")
+
+    print(Style.RESET_ALL)
+
     # Print the inventory items in a separate colored section
     if player.inventory:
         print(Fore.CYAN + "You are carrying:")
@@ -295,7 +263,6 @@ def trytouse(item):
             if inventory_item.usedin == current_room.number or inventory_item.usedin == 0:
                 if isinstance(inventory_item, StatItem):
                     player.hp += inventory_item.hp_change
-                    showhpbar()
                 if inventory_item.removesroomitem is not None:
                     current_room.items.remove(inventory_item.removesroomitem)
                 if inventory_item.addsroomitem is not None:
