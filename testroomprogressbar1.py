@@ -2,9 +2,6 @@
 from colorama import Fore, Style
 import time
 import progressbar2 as progressbar
-import pygame
-
-pygame.init()
 
 class Room:
     def __init__(self, number, name, description, exits, key, items, enemies):
@@ -83,17 +80,6 @@ print("Greetings", player_name + "!")
 
 player = Player(player_name, room5, [], 10, [bread], None)
 
-def play_sword_clang():
-    sound_file_path = "/home/nate/mu_code/sword.wav"
-    sword_sound = pygame.mixer.Sound(sound_file_path)
-    sword_sound.play()
-
-def play_mace_clang():
-    sound_file_path = "/home/nate/mu_code/mace.wav"
-    sword_sound = pygame.mixer.Sound(sound_file_path)
-    sword_sound.play()
-    return
-
 def showhpbar():
   # Calculate the percentage of hit points
     progress = player.hp / 10.0 * 100
@@ -141,7 +127,6 @@ def fight(enemy_name):
             # Player's turn
             player_damage = player.weapon.damage
             enemy.hp -= player_damage
-            play_sword_clang()
             typewriter_effect(f"\033[32mYou hit the {enemy.name} with your {player.weapon.name}. It causes {player_damage} damage.\033[0m")
 
 
@@ -155,7 +140,6 @@ def fight(enemy_name):
             # Enemy's turn
             enemy_damage = enemy.weapon.damage
             player.hp -= enemy_damage
-            play_mace_clang()
             typewriter_effect(f"\033[31mThe {enemy.name} hits you with its {enemy.weapon.name}. It causes {enemy_damage} damage.\033[0m")
             showhpbar()
 
